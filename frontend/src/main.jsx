@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"; // correct
 import App from "./App.jsx";
+import "./index.css";
+
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql", // your backend URL
