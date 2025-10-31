@@ -1,17 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"; // correct
 import App from "./App.jsx";
 import "./index.css";
 
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { Toaster } from "react-hot-toast";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql", // your backend URL
+  uri: "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
 });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
+  <React.StrictMode>
+    <ApolloProvider client={client}>
+      <App />
+      <Toaster position="top-right" reverseOrder={false} />
+    </ApolloProvider>
+  </React.StrictMode>
 );
