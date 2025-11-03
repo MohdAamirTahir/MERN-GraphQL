@@ -9,7 +9,6 @@ export default function App() {
         <h1 className="text-4xl font-bold text-indigo-600 tracking-tight">
            User Management Dashboard
         </h1>
-
       </header>
 
       <main className="w-full max-w-4xl bg-white shadow-xl rounded-2xl p-6 space-y-8">
