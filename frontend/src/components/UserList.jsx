@@ -6,53 +6,14 @@ import { DELETE_USER } from "../graphql/mutations";
 
 export default function UserList() {
   const { loading, error, data } = useQuery(GET_USERS);
-
   const [deleteUser] = useMutation(DELETE_USER, {
-    update(cache, { data: { deleteUser } }) {
-      const existing = cache.readQuery({ query: GET_USERS });
-      if (existing) {
-        cache.writeQuery({
-          query: GET_USERS,
-          data: {
-            users: existing.users.filter((u) => u.id !== deleteUser.id),
-          },
-        });
-      }
-    },
+    refetchQueries: [{ query: GET_USERS }],
     onCompleted: () => toast.success("User deleted!"),
-    onError: (err) => toast.error(`Error: ${err.message}`),
+    onError: (err) => toast.error(err.message),
   });
 
-  const handleDelete = (id, name) => {
-    toast(
-      (t) => (
-        <div className="flex flex-col gap-2">
-          <span>Delete {name}?</span>
-          <div className="flex gap-2 justify-end">
-            <button
-              onClick={() => {
-                deleteUser({ variables: { id } });
-                toast.dismiss(t.id);
-              }}
-              className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
-            >
-              Yes
-            </button>
-            <button
-              onClick={() => toast.dismiss(t.id)}
-              className="px-2 py-1 bg-gray-300 rounded hover:bg-gray-400 transition"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      ),
-      { duration: Infinity }
-    );
-  };
-
-  if (loading) return <p className="text-gray-500">Loading users...</p>;
-  if (error) return <p className="text-red-500">Error: {error.message}</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
@@ -78,7 +39,7 @@ export default function UserList() {
                 <td className="py-3 px-4">{user.age}</td>
                 <td className="py-3 px-4">
                   <button
-                    onClick={() => handleDelete(user.id, user.name)}
+                    onClick={() => deleteUser({ variables: { id: user.id } })}
                     className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
                   >
                     Delete
@@ -86,13 +47,6 @@ export default function UserList() {
                 </td>
               </tr>
             ))}
-            {data.users.length === 0 && (
-              <tr>
-                <td colSpan="4" className="text-center py-6 text-gray-500">
-                  No users found.
-                </td>
-              </tr>
-            )}
           </tbody>
         </table>
       </div>

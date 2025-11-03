@@ -12,7 +12,7 @@ export default function UserForm() {
   const [addUser, { loading }] = useMutation(ADD_USER, {
     refetchQueries: [{ query: GET_USERS }],
     onCompleted: () => toast.success("User added successfully!"),
-    onError: (err) => toast.error(`Error: ${err.message}`),
+    onError: (err) => toast.error(err.message),
   });
 
   const handleSubmit = (e) => {
