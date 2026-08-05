@@ -14,7 +14,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/graphql": {
-        target: "https://mern-graphql-1.onrender.com",
+        target: "http://localhost:4000",
         changeOrigin: true,
         secure: false,
       },

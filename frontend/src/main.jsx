@@ -7,7 +7,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Toaster } from "react-hot-toast";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: import.meta.env.VITE_GRAPHQL_URL || "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
 });
 
