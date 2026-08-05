@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { ApolloServer } from "apollo-server-express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -8,6 +9,7 @@ import { resolvers } from "./schema/resolvers.js";
 dotenv.config();
 
 const app = express();
+app.use(cors());
 const server = new ApolloServer({ typeDefs, resolvers });
 
 await server.start();
